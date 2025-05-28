@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import ProductCategory, Product, Order, OrderItem, Promotion, SupportRequest
+from .models import ProductCategory, Product, Order, OrderItem, Promotion, SupportRequest, viexam
+
+
+@admin.register(viexam)
+class viexamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'exam_date', 'is_public')  
+    search_fields = ('name', 'participants__email')    # поиск 
+    list_filter = ('is_public', 'created_at', 'exam_date')
+    filter_horizontal = ('participants',)              # m2m
+    date_hierarchy = 'exam_date'           
 
 
 class ProductInline(admin.TabularInline):
