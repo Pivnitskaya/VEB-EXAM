@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Экзамен (Веб технологии)</title>
+</head>
+<body>
+    <h1>{{ fio }} 242-672 </h1>
+    <h2>Опубликованные экзамены:</h2>
+    <ul>
+        {% for exam in exams %}
+        <li>
+            <strong>Название экзамена:</strong> {{ exam.name }} <br>
+            <strong>Дата создания записи:</strong> {{ exam.created_at }} <br>
+            <strong>Дата проведения экзамена:</strong> {{ exam.exam_date }} <br>
+            <strong>Изображение задания:</strong> 
+            {% if exam.image %}
+                <img src="{{ exam.image.url }}" alt="Задание" width="200">
+            {% else %}
+                Нет изображения
+            {% endif %}
+            <br>
+            <strong>Участники:</strong> 
+            {% for user in exam.participants.all %}
+                {{ user.get_full_name }} ({{ user.email }}){% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Нет участников
+            {% endfor %}
+            <br>
+            <strong>Опубликовано:</strong> {{ exam.is_public }}
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+</body>
+</html>
