@@ -1,4 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+class viexam(models.Model):
+    name = models.CharField(max_length=200)                                
+    created_at = models.DateTimeField(auto_now_add=True)                   
+    exam_date = models.DateField()                                        
+    image = models.ImageField(upload_to='exam_images/', null=True, blank=True)  
+    participants = models.ManyToManyField(User, related_name='exams')     
+    is_public = models.BooleanField(default=False)                        
 
 class ProductCategory(models.Model):
     name = models.CharField("Название категории", max_length=255)
